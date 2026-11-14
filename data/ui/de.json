@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Das Vokabular wurde maschinell entworfen und ist erst teilweise geprüft. Feedback ist sehr willkommen.",
     "head.draftTopic": "Vokabular-Entwurf",
@@ -21,6 +21,9 @@
     "lang.same": "Dieselbe Sprache",
     "lang.sameNote": "Definitionen statt Übersetzungen",
     "lang.sameHelp": "Die Karten zeigen statt einer Übersetzung eine kurze Definition in der Sprache, die du lernst. Gut, sobald du darin einfache Sätze lesen kannst.",
+    "lang.fallback": "Zusätzliche Definitionssprachen (optional)",
+    "lang.fallbackHelp": "Die oben gewählte Sprache bleibt die Hauptsprache. Weitere Übersetzungen lassen sich auf der Karte durch Anklicken des Sprachnamens einblenden. Beispielübersetzungen bleiben in der Hauptsprache.",
+    "download.mergeFields": "Aktualisierst du ein Deck aus dem Originalprojekt? Aktiviere beim Import „Notiztypen zusammenführen“, um die zusätzlichen Übersetzungsfelder hinzuzufügen und deinen Lernfortschritt zu behalten.",
     "lang.loading": "Wörter werden geladen ({language})…",
     "lang.failed": "Die Wörter konnten nicht geladen werden ({language}). Prüfe deine Verbindung und lade die Seite neu.",
     "group.germanic": "Germanische Sprachen",

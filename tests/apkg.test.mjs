@@ -63,6 +63,18 @@ test('the zip holds collection.anki2 and an empty media map, dated 1980-01-01 00
   assert.equal(strFromU8(files.media), '{}');
 });
 
+test('fallback fields survive packaging without changing the primary pair IDs', async () => {
+  const { rows, json } = await build({ learn: 'ja', know: 'de', fallbackLanguages: ['en'], modules: ['core-1'] });
+  const mid = await modelId('ja', 'de');
+  const model = json('models')[mid];
+  assert.ok(model.flds.some((f) => f.name === 'Translation_en'));
+  assert.match(model.tmpls[0].afmt, /<details class="fallback">/);
+  const water = rows('select guid, flds from notes').find((n) => n.flds.split('\x1f')[FIELD_NAMES.indexOf('Translation_en')] === 'water');
+  assert.ok(water);
+  assert.equal(water.guid, await noteGuid('ja', 'de', 'word-water'));
+  assert.ok(json('decks')[await deckId('ja', 'de')]);
+});
+
 test('the collection has the schema-11 tables, indexes and col row', async () => {
   const { rows, col, json } = await build({ learn: 'ru', know: 'en' });
   const objects = rows("select type, name from sqlite_master order by type, name").map((r) => `${r.type}:${r.name}`);

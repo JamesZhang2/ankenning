@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "De woordenschat is machinaal opgesteld en nog maar deels gecontroleerd. Feedback is heel welkom.",
     "head.draftTopic": "de conceptwoordenschat",
@@ -21,6 +21,9 @@
     "lang.same": "Dezelfde taal",
     "lang.sameNote": "verklarend woordenboek",
     "lang.sameHelp": "De kaarten tonen in plaats van een vertaling een korte definitie in de taal die je leert. Handig zodra je er eenvoudige zinnen in kunt lezen.",
+    "lang.fallback": "Extra definitietalen (optioneel)",
+    "lang.fallbackHelp": "De taal hierboven blijft de hoofdtaal. Kies extra vertalingen die je op een kaart toont door op de taalnaam te klikken. Vertalingen van voorbeelden blijven in de hoofdtaal.",
+    "download.mergeFields": "Werk je een deck uit het oorspronkelijke project bij? Schakel bij het importeren „Notitietypen samenvoegen“ in om de extra vertaalvelden toe te voegen en je leervoortgang te behouden.",
     "lang.loading": "Woorden laden ({language})…",
     "lang.failed": "De woorden konden niet worden geladen ({language}). Controleer je verbinding en laad de pagina opnieuw.",
     "group.germanic": "Germaanse talen",

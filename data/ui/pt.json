@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "O vocabulário foi redigido por uma máquina e só está revisto em parte. As tuas sugestões são muito bem-vindas.",
     "head.draftTopic": "o vocabulário em rascunho",
@@ -21,6 +21,9 @@
     "lang.same": "A mesma língua",
     "lang.sameNote": "definições em vez de traduções",
     "lang.sameHelp": "Os cartões mostram uma definição curta na língua que estás a aprender em vez de uma tradução. Bom quando já consegues ler frases simples nessa língua.",
+    "lang.fallback": "Idiomas de apoio para as definições (opcional)",
+    "lang.fallbackHelp": "O idioma acima continua a ser o principal. Escolha traduções adicionais que pode mostrar ao clicar no nome do idioma num cartão. As traduções dos exemplos mantêm-se no idioma principal.",
+    "download.mergeFields": "Vai atualizar um baralho do projeto original? Ative «Fundir tipos de nota» ao importar para adicionar os campos de tradução adicionais e manter o seu progresso.",
     "lang.loading": "A carregar palavras ({language})…",
     "lang.failed": "Não foi possível carregar as palavras ({language}). Verifica a ligação e recarrega a página.",
     "group.germanic": "Línguas germânicas",

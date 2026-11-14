@@ -20,7 +20,7 @@ const throwingStorage = {
 
 test('defaults come from fields.json', () => {
   assert.deepEqual(defaultConfig(meta), {
-    v: 1, learn: null, know: null, modules: [], fields: {}, examples: 2, reverse: false, type: false, audio: false, srScript: 'cyrl',
+    v: 1, learn: null, know: null, fallbackLanguages: [], modules: [], fields: {}, examples: 2, reverse: false, type: false, audio: false, srScript: 'cyrl',
   });
 });
 
@@ -48,7 +48,7 @@ test('the ARCHITECTURE example decodes; re-encoding drops what does not apply', 
 test('invalid values fall back to defaults and keep the rest', () => {
   const config = decodeHash('#v1&l=xx&k=ru&m=core-1,nope&f=reading:z,word:b,ipa:f,bogus:b&x=9&r=yes&t=1&sr=q&zz=1', meta);
   assert.deepEqual(config, {
-    v: 1, learn: null, know: 'ru', modules: ['core-1'], fields: { ipa: 'front' }, examples: 2, reverse: false, type: false, audio: false, srScript: 'cyrl',
+    v: 1, learn: null, know: 'ru', fallbackLanguages: [], modules: ['core-1'], fields: { ipa: 'front' }, examples: 2, reverse: false, type: false, audio: false, srScript: 'cyrl',
   });
   assert.equal(decodeHash('#v1&l=ru&k=ru', meta)?.know, null, 'cannot speak the language you learn (use Same language)');
   assert.equal(decodeHash('#v1&l=ru&x=%E0%A4', meta)?.learn, 'ru', 'a malformed escape only drops its key');

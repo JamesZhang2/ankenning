@@ -13,6 +13,7 @@ import { escapeAttr, escapeHtml, stripHtml } from '../text/html.js';
 import { exampleHtml, stripFurigana, stripTarget, wordRubyHtml } from '../text/furigana.js';
 import { SCHEMES, srToLatin } from '../text/translit.js';
 import { stripStress, stripVowels } from '../text/normalize.js';
+import { FALLBACK_LANGUAGES, fallbackField } from './fallbacks.js';
 
 /** @typedef {import('./select.js').Note} Note */
 /** @typedef {import('./select.js').Disambig} Disambig */
@@ -25,6 +26,7 @@ export const FIELD_NAMES = /** @type {const} */ ([
   'Word', 'WordRuby', 'TypeTarget', 'Disambig', 'Translation', 'Romanization', 'OtherScript', 'MeasureWord',
   'Hanja', 'Forms', 'IPA', 'Examples', 'Related', 'Etymology', 'POS', 'Register', 'Emoji', 'ConceptId', 'Reverse',
   'Audio',
+  ...FALLBACK_LANGUAGES.map(fallbackField),
 ]);
 
 /** @typedef {Record<(typeof FIELD_NAMES)[number], string>} Fields */
@@ -49,9 +51,9 @@ export function langTag(reg, code, srScript) {
 
 /**
  * Everything the field and template builders need for one config.
- * @param {{ config: Config, meta: any, concepts: Concepts, learnData: LanguageData, knowData: LanguageData, audio?: import('../data/clips.js').AudioIndex | null }} input
+ * @param {{ config: Config, meta: any, concepts: Concepts, learnData: LanguageData, knowData: LanguageData, fallbackData?: Map<string, LanguageData>, audio?: import('../data/clips.js').AudioIndex | null }} input
  */
-export function deckContext({ config, meta, concepts, learnData, knowData, audio = null }) {
+export function deckContext({ config, meta, concepts, learnData, knowData, fallbackData = new Map(), audio = null }) {
   const same = config.know === SAME;
   const learnCode = /** @type {string} */ (config.learn);
   const knowCode = same ? learnCode : /** @type {string} */ (config.know);
@@ -70,10 +72,10 @@ export function deckContext({ config, meta, concepts, learnData, knowData, audio
     return text;
   };
   /** Known-language text: as its speakers write it (no stress or vowel marks), Serbian in the chosen script. @param {string} text */
-  const knowText = (text) => {
-    if (knowReg?.stress) text = stripStress(text);
-    if (knowReg?.vowels) text = stripVowels(text);
-    if (knowCode === 'sr' && latn) text = srToLatin(text);
+  const translationText = (text, code = knowCode) => {
+    if (languages[code]?.stress) text = stripStress(text);
+    if (languages[code]?.vowels) text = stripVowels(text);
+    if (code === 'sr' && latn) text = srToLatin(text);
     return text;
   };
   // A deck with a right-to-left language marks the direction of every block, as well as its language.
@@ -93,6 +95,7 @@ export function deckContext({ config, meta, concepts, learnData, knowData, audio
     config,
     meta,
     concepts,
+    fallbackData,
     same,
     learn: { code: learnCode, reg: learnReg, data: learnData, ...side(learnReg, langTag(learnReg, learnCode, config.srScript)) },
     know: { code: knowCode, reg: knowReg, data: knowData, ...side(knowReg, langTag(knowReg, knowCode, config.srScript)) },
@@ -102,7 +105,8 @@ export function deckContext({ config, meta, concepts, learnData, knowData, audio
     audio: config.audio ? audio : null,
     stressOn,
     learnText,
-    knowText,
+    knowText: translationText,
+    translationText,
     label,
   };
 }
@@ -138,6 +142,11 @@ export function noteFields(note, ctx) {
     ConceptId: on('conceptId') ? escapeHtml(note.conceptIds.join(', ')) : '',
     Reverse: ctx.config.reverse ? '1' : '',
     Audio: soundTag(note, ctx),
+    ...Object.fromEntries(FALLBACK_LANGUAGES.map((code) => [fallbackField(code),
+      ctx.config.fallbackLanguages.includes(code)
+        ? translationsHtml(note.conceptIds.map((id) => ctx.fallbackData.get(code)?.lang.get(id)).filter(Boolean), ctx, code)
+        : '',
+    ])),
   };
 }
 
@@ -223,18 +232,24 @@ function translationHtml(note, ctx) {
     const defs = unique(note.learnEntries.map((e) => e.def)).map((d) => escapeHtml(ctx.learnText(d)));
     return defs.length > 1 ? defs.map((d, i) => `<span class="n">${i + 1}.</span> ${d}`).join('<br>') : (defs[0] ?? '');
   }
-  const parts = unique(note.knowEntries.map((e) => knownEntryHtml(e, ctx)));
+  return translationsHtml(note.knowEntries, ctx, ctx.know.code);
+}
+
+/** @param {any[]} entries @param {DeckContext} ctx @param {string} code */
+function translationsHtml(entries, ctx, code) {
+  const parts = unique(entries.map((e) => knownEntryHtml(e, ctx, code)));
   if (parts.length < 2) return parts[0] ?? '';
   // merged notes: each member wraps as a unit ("hand; arm")
   return parts.map((p, i) => `<span class="m">${p}${i < parts.length - 1 ? ';' : ''}</span>`).join(' ');
 }
 
-/** "brother (older) · big brother", or the gloss in italics. @param {any} e @param {DeckContext} ctx */
-function knownEntryHtml(e, ctx) {
-  if (!e.w) return `<i class="gl">${escapeHtml(ctx.knowText(e.gl ?? ''))}</i>`;
-  let html = escapeHtml(ctx.knowText(e.w));
-  if (e.hint) html += ` <span class="hint">(${escapeHtml(ctx.knowText(e.hint))})</span>`;
-  if (e.alt?.length) html += ` <span class="alt">· ${e.alt.map((/** @type {string} */ a) => escapeHtml(ctx.knowText(a))).join(', ')}</span>`;
+/** "brother (older) · big brother", or the gloss in italics. @param {any} e @param {DeckContext} ctx @param {string} code */
+function knownEntryHtml(e, ctx, code) {
+  const text = (/** @type {string} */ value) => ctx.translationText(value, code);
+  if (!e.w) return `<i class="gl">${escapeHtml(text(e.gl ?? ''))}</i>`;
+  let html = escapeHtml(text(e.w));
+  if (e.hint) html += ` <span class="hint">(${escapeHtml(text(e.hint))})</span>`;
+  if (e.alt?.length) html += ` <span class="alt">· ${e.alt.map((/** @type {string} */ a) => escapeHtml(text(a))).join(', ')}</span>`;
   return html;
 }
 

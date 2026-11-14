@@ -257,3 +257,12 @@ Repeat a shorter round on the phone, in a fresh state (or after deleting the des
 | A second "Ankenning::…" deck appears | The original deck was renamed or moved | Move the new cards into your deck |
 | "Ankenning › …" appears next to "AnkiGen › …" | A deck made before the rename was updated without renaming it first | Move the new deck's cards into the AnkiGen deck (Browse → Change Deck), delete the empty Ankenning deck, then rename AnkiGen to Ankenning |
 | "The front of this card is blank." | Reverse cards were turned off | Tools → Empty Cards |
+
+## This fork: fallback definitions
+
+- Build French / Spanish with English checked under **Fallback definition languages**. Enable reverse cards and download.
+- Import into Anki desktop / AnkiDroid. When updating an original-project deck, enable **Merge note types** and verify that existing review progress remains.
+- On a forward question, neither Spanish nor English should appear. On the answer, Spanish should be visible; **English** should start closed, open on click/tap, and close on a second click/tap.
+- On a reverse question, Spanish should be visible and English should start closed. Revealing it should not reveal the French answer. The reverse answer should also start with English closed.
+- Check keyboard activation of the disclosure, night mode, and the separate `Translation_en` field in the note editor.
+- Re-export with more or fewer fallback languages. The deck and note identities should stay the same, and removed fallbacks should be empty after import.

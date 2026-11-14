@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Bộ từ vựng do máy soạn và mới được kiểm tra một phần. Mọi góp ý đều rất đáng quý.",
     "head.draftTopic": "bộ từ vựng bản nháp",
@@ -21,6 +21,9 @@
     "lang.same": "Cùng ngôn ngữ",
     "lang.sameNote": "giải nghĩa từ",
     "lang.sameHelp": "Thẻ hiển thị lời giải nghĩa ngắn bằng ngôn ngữ bạn đang học thay cho bản dịch. Phù hợp khi bạn đã đọc được câu đơn giản bằng ngôn ngữ đó.",
+    "lang.fallback": "Ngôn ngữ giải nghĩa bổ sung (tùy chọn)",
+    "lang.fallbackHelp": "Ngôn ngữ ở trên vẫn là ngôn ngữ chính. Chọn các bản dịch bổ sung để hiện bằng cách nhấp vào tên ngôn ngữ trên thẻ. Bản dịch ví dụ vẫn dùng ngôn ngữ chính.",
+    "download.mergeFields": "Bạn đang cập nhật bộ thẻ từ dự án gốc? Hãy bật “Hợp nhất loại ghi chú” khi nhập để thêm các trường bản dịch và giữ tiến độ học.",
     "lang.loading": "Đang tải từ: {language}…",
     "lang.failed": "Không tải được từ ({language}). Hãy kiểm tra kết nối và tải lại trang.",
     "group.germanic": "Ngôn ngữ German",

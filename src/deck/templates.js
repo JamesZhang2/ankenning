@@ -14,7 +14,8 @@
 
 import { typesAnswer } from '../state.js';
 import { escapeHtml } from '../text/html.js';
-import { FIELD_NAMES } from './fields.js';
+import { FIELD_NAMES, langTag } from './fields.js';
+import { fallbackField } from './fallbacks.js';
 import { pairLabel } from './names.js';
 
 /** @typedef {import('./fields.js').DeckContext} DeckContext */
@@ -72,7 +73,15 @@ function word(ctx, ruby) {
 
 /** @param {DeckContext} ctx @param {string} cls */
 function translation(ctx, cls) {
-  return `<div class="${cls}"${ctx.know.attrs} data-field="Translation">{{Translation}}</div>`;
+  const fallbacks = ctx.config.fallbackLanguages.map((code) => {
+    const reg = ctx.meta.languages.languages[code];
+    const field = fallbackField(code);
+    const tag = langTag(reg, code, ctx.config.srScript);
+    const dir = reg?.dir === 'rtl' ? 'rtl' : 'ltr';
+    // Native details/summary works in Anki's webviews and the sandboxed preview, without scripts.
+    return `{{#${field}}}<details class="fallback"><summary lang="${tag}" dir="${dir}">${escapeHtml(reg?.native ?? code)}</summary><div class="translation" lang="${tag}" dir="${dir}" data-field="${field}">{{${field}}}</div></details>{{/${field}}}`;
+  }).join('');
+  return `<div class="${cls}"${ctx.know.attrs} data-field="Translation">{{Translation}}</div>` + fallbacks;
 }
 
 /** @param {string} dir @param {string} side @param {string} body */

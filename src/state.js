@@ -2,11 +2,11 @@
 // Deck configuration (ARCHITECTURE §4): model, defaults from data/meta/fields.json, validation,
 // URL-hash codec, local storage, and a tiny observable store. Pure logic: the storage object is passed in.
 //
-// Hash format: #v1&l=ja&k=ru&m=core-1,food&f=reading:f,ipa:o&x=2&r=1&t=1&a=1&sr=c
+// Hash format: #v1&l=ja&k=ru&kl=en&m=core-1,food&f=reading:f,ipa:o&x=2&r=1&t=1&a=1&sr=c
 //   l learn · k know ('=' = same-language mode) · m modules (canonical order) · f field placements that
 //   differ from the default (o off, f front, b back, n on, w with the word) · x examples 0–3 ·
 //   r reverse · t type the answer (needs r) · a audio (written where the learned language has it) ·
-//   sr Serbian script (c|l, written when Serbian is involved).
+//   sr Serbian script (c|l, written when Serbian is involved) · kl extra definition languages.
 // Unknown keys are ignored; an invalid value falls back to its default and keeps the rest.
 
 /** @typedef {'off' | 'front' | 'back' | 'on' | 'word'} Placement */
@@ -17,6 +17,7 @@
  * @property {1} v
  * @property {string | null} learn
  * @property {string | null} know  a language code, '=' for same-language mode, or null
+ * @property {string[]} fallbackLanguages  extra translation languages, hidden until clicked
  * @property {string[]} modules    selected module IDs, canonical order
  * @property {Record<string, Placement>} fields  explicit placements (only those the user changed)
  * @property {number} examples
@@ -60,7 +61,7 @@ const SCRIPT_CODE = { cyrl: 'c', latn: 'l' };
 const invert = (map) => Object.fromEntries(Object.entries(map).map(([k, v]) => [v, k]));
 const CODE_PLACEMENT = invert(PLACEMENT_CODE);
 const CODE_SCRIPT = invert(SCRIPT_CODE);
-const HASH_KEYS = ['l', 'k', 'm', 'f', 'x', 'r', 't', 'a', 'sr'];
+const HASH_KEYS = ['l', 'k', 'kl', 'm', 'f', 'x', 'r', 't', 'a', 'sr'];
 
 // ---------------------------------------------------------------- meta helpers
 
@@ -91,7 +92,7 @@ export function mode(config) {
 
 /** True if Serbian is the learned or the known language. @param {Config} config */
 export function usesSerbian(config) {
-  return config.learn === 'sr' || config.know === 'sr';
+  return config.learn === 'sr' || config.know === 'sr' || config.fallbackLanguages.includes('sr');
 }
 
 /** @param {Meta} meta @param {string | null} code */
@@ -136,6 +137,7 @@ export function defaultConfig(meta) {
     v: 1,
     learn: null,
     know: null,
+    fallbackLanguages: [],
     modules: [],
     fields: {},
     examples: examplesRange(meta).default,
@@ -157,6 +159,7 @@ export function validate(raw, meta) {
   const active = meta.languages.active;
   const learn = active.includes(raw.learn) ? raw.learn : null;
   const know = raw.know === SAME || (active.includes(raw.know) && raw.know !== learn) ? raw.know : null;
+  const fallbacks = new Set(Array.isArray(raw.fallbackLanguages) ? raw.fallbackLanguages : []);
   const all = moduleIds(meta);
   const chosen = new Set(Array.isArray(raw.modules) ? raw.modules : []);
   /** @type {Record<string, Placement>} */
@@ -172,6 +175,7 @@ export function validate(raw, meta) {
     v: 1,
     learn,
     know,
+    fallbackLanguages: know ? active.filter((code) => fallbacks.has(code) && code !== learn && code !== know) : [],
     modules: all.filter((id) => chosen.has(id)),
     fields,
     examples,
@@ -203,6 +207,7 @@ export function encodeHash(config, meta) {
   const parts = ['v1'];
   if (config.learn) parts.push(`l=${config.learn}`);
   if (config.know) parts.push(`k=${config.know}`);
+  if (config.fallbackLanguages.length) parts.push(`kl=${config.fallbackLanguages.join(',')}`);
   if (config.modules.length) parts.push(`m=${config.modules.join(',')}`);
   const fields = meta.fields.fields
     .filter((def) => config.fields[def.id] && isFieldShown(def, config) && config.fields[def.id] !== defaultPlacement(def, config.learn))
@@ -249,6 +254,7 @@ export function decodeHash(hash, meta) {
     {
       learn: values.l,
       know: values.k,
+      fallbackLanguages: values.kl ? values.kl.split(',') : [],
       modules: values.m ? values.m.split(',') : [],
       fields,
       examples: values.x !== undefined && /^\d+$/.test(values.x) ? Number(values.x) : undefined,

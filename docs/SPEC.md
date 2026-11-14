@@ -40,6 +40,7 @@ Repo: https://github.com/xenohunter/ankenning (branch `master`). Site: https://x
 - **Modes:**
   - Bilingual: *I'm learning* X, *I speak* Y.
   - **Same language**: X → short definitions in X.
+  - **This fork:** optional fallback definition languages supplement either mode. The primary meaning stays visible; each fallback has its own initially collapsed disclosure and Anki field. Captions and example translations stay in the primary language. Fallbacks appear beside the translation on forward answers and reverse questions/answers.
 
 ## 2. Modules (tree, collapsible meta-categories)
 
@@ -177,6 +178,7 @@ Always-visible elements:
 - **Note order:** canonical order (module tree order, then file order).
 - **Module membership** goes into hierarchical tags: `ankenning::<category>::<module>`.
 - The **note type** has a fixed field list. Templates depend on the configuration. Fields the user switched off are left empty.
+  - This fork appends 23 `Translation_<code>` fields after `Audio`, one for each supported fallback language (43 fields total). Importing over an original-project deck requires **Merge note types** once. Changing fallback choices then preserves the schema and existing note identities.
   - On 2026-10-28 the `Audio` field was appended (20 fields). The site was already reachable then, so a deck downloaded before that needs "Merge note types" ticked once when the next download is imported; otherwise Anki skips its notes as conflicting.
 
 ## 7. Data

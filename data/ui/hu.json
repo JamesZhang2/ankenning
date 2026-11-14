@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "A szókincset gép készítette, és csak részben ellenőrizték. Minden visszajelzést szívesen fogadunk.",
     "head.draftTopic": "a szókincs vázlata",
@@ -21,6 +21,9 @@
     "lang.same": "Ugyanaz a nyelv",
     "lang.sameNote": "értelmező szótár",
     "lang.sameHelp": "A kártyák fordítás helyett rövid meghatározást mutatnak a tanult nyelven. Akkor jó, ha már tudsz egyszerű mondatokat olvasni rajta.",
+    "lang.fallback": "További definíciós nyelvek (nem kötelező)",
+    "lang.fallbackHelp": "A fent kiválasztott nyelv marad az elsődleges. A további fordítások a kártyán a nyelv nevére kattintva jelennek meg. A példák fordításai az elsődleges nyelven maradnak.",
+    "download.mergeFields": "Az eredeti projekt pakliját frissíted? Importáláskor kapcsold be a „Jegyzettípusok egyesítése” lehetőséget a további fordítási mezők hozzáadásához és a tanulási előrehaladás megőrzéséhez.",
     "lang.loading": "Szavak betöltése: {language}…",
     "lang.failed": "Nem sikerült betölteni a szavakat ({language}). Ellenőrizd a kapcsolatot, és töltsd újra az oldalt.",
     "group.germanic": "Germán nyelvek",

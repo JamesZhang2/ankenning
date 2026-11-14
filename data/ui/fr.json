@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Le vocabulaire a été rédigé par une machine et n'est que partiellement relu. Vos retours sont les bienvenus.",
     "head.draftTopic": "le vocabulaire en brouillon",
@@ -21,6 +21,9 @@
     "lang.same": "La même langue",
     "lang.sameNote": "définitions au lieu de traductions",
     "lang.sameHelp": "Les cartes affichent une courte définition dans la langue que vous apprenez au lieu d'une traduction. Idéal dès que vous pouvez y lire des phrases simples.",
+    "lang.fallback": "Langues de définition supplémentaires (facultatif)",
+    "lang.fallbackHelp": "La langue ci-dessus reste la langue principale. Choisissez des traductions supplémentaires à afficher en cliquant sur leur nom de langue sur une carte. Les exemples restent traduits dans la langue principale.",
+    "download.mergeFields": "Vous mettez à jour un paquet du projet original ? Activez « Fusionner les types de notes » à l’importation pour ajouter les champs de traduction supplémentaires et conserver votre progression.",
     "lang.loading": "Chargement des mots ({language})…",
     "lang.failed": "Impossible de charger les mots ({language}). Vérifiez votre connexion et rechargez la page.",
     "group.germanic": "Langues germaniques",

@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Chaidh am briathrachas a dhreachdadh le inneal agus cha deach ach pàirt dheth a sgrùdadh. Tha fàilte mhòr air beachdan.",
     "head.draftTopic": "am briathrachas dreachd",
@@ -21,6 +21,9 @@
     "lang.same": "An aon chànan",
     "lang.sameNote": "mìneachaidhean fhaclan",
     "lang.sameHelp": "Seallaidh na cairtean mìneachadh goirid sa chànan a tha thu ag ionnsachadh an àite eadar-theangachaidh. Math nuair as urrainn dhut seantansan sìmplidh a leughadh ann.",
+    "lang.fallback": "Cànanan mìneachaidh a bharrachd (roghainneil)",
+    "lang.fallbackHelp": "Is i an cànan gu h-àrd am prìomh chànan fhathast. Tagh eadar-theangachaidhean a bharrachd a nochdas nuair a bhriogas tu air ainm a’ chànain air cairt. Fanaidh eadar-theangachaidhean nan eisimpleirean sa phrìomh chànan.",
+    "download.mergeFields": "A bheil thu ag ùrachadh paca bhon phròiseact thùsail? Cuir an comas “Co-aonaich seòrsaichean nòtaichean” nuair a bheir thu a-steach e gus na raointean eadar-theangachaidh a bharrachd a chur ris agus d’ adhartas a chumail.",
     "lang.loading": "A’ luchdadh fhaclan: {language}…",
     "lang.failed": "Cha b’ urrainn dhuinn na faclan a luchdadh ({language}). Thoir sùil air a’ cheangal agad agus ath-luchdaich an duilleag.",
     "group.germanic": "Cànanan Gearmailteach",

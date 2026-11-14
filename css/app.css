@@ -606,6 +606,9 @@ html:has(.is-pinned) {
 }
 
 /* Step 2: "Same language" on a row of its own, set apart from the languages. */
+.fallback-languages { margin-top: 1.25rem; }
+.fallback-languages > summary { cursor: pointer; color: var(--accent); }
+
 .same-row {
   display: flex;
   flex-wrap: wrap;

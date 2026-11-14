@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "词汇由 AI 起草，目前只有一部分经过人工审核。非常欢迎你的反馈。",
     "head.draftTopic": "词汇草稿",
@@ -21,6 +21,9 @@
     "lang.same": "同一种语言",
     "lang.sameNote": "词语释义",
     "lang.sameHelp": "卡片上显示的是用所学语言写的简短释义，而不是翻译。适合已经能读懂这门语言简单句子的学习者。",
+    "lang.fallback": "备用释义语言（可选）",
+    "lang.fallbackHelp": "上方选择的语言仍为主要语言。可选择更多翻译，在卡片上点击语言名称即可显示。例句翻译仍使用主要语言。",
+    "download.mergeFields": "正在更新来自原项目的牌组？导入时请启用“合并笔记类型”，以添加额外翻译字段并保留学习进度。",
     "lang.loading": "正在加载单词（{language}）…",
     "lang.failed": "无法加载单词（{language}）。请检查网络连接，然后重新加载页面。",
     "group.germanic": "日耳曼语言",

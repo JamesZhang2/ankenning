@@ -19,7 +19,7 @@ import { language } from './i18n.js';
  * What the page shows for the current config.
  * @typedef {object} View
  * @property {Config} config
- * @property {boolean} ready  concepts and both languages are loaded
+ * @property {boolean} ready  concepts and all selected languages are loaded
  * @property {Note[]} notes   the deck's notes, in canonical order
  * @property {number} cards   a forward card per note, plus a reverse card when reverse is on
  * @property {Map<string, number>} counts  words per module for this language pair
@@ -121,7 +121,7 @@ export function createApp({ loader, meta, initial, random = Math.random }) {
         () => (concepts = { order: [], byId: new Map() }),
       );
     }
-    for (const code of [config.learn, config.know]) if (code && code !== SAME) prefetch(code);
+    for (const code of [config.learn, config.know, ...config.fallbackLanguages]) if (code && code !== SAME) prefetch(code);
     const learn = /** @type {string} */ (config.learn);
     if (usesAudio(meta, config) && !audios.has(learn)) {
       const load = async () => {
@@ -132,20 +132,27 @@ export function createApp({ loader, meta, initial, random = Math.random }) {
     }
   }
 
-  /** audio: null if none, undefined while loading. @param {Config} config @returns {{ learnData?: LanguageData, knowData?: LanguageData, audio?: AudioIndex | null }} */
+  /** audio: null if none, undefined while loading. @param {Config} config */
   function dataFor(config) {
     const learnData = config.learn ? languages.get(config.learn) : undefined;
     const knowData = config.know === SAME ? learnData : config.know ? languages.get(config.know) : undefined;
-    return { learnData, knowData, audio: usesAudio(meta, config) ? audios.get(/** @type {string} */ (config.learn)) : null };
+    const fallbacksReady = config.fallbackLanguages.every((code) => languages.has(code));
+    /** @type {Map<string, LanguageData>} */
+    const fallbackData = new Map();
+    for (const code of config.fallbackLanguages) {
+      const data = languages.get(code);
+      if (data) fallbackData.set(code, data);
+    }
+    return { learnData, knowData, fallbackData, fallbacksReady, audio: usesAudio(meta, config) ? audios.get(/** @type {string} */ (config.learn)) : null };
   }
 
   /** The view without its sample. @param {Config} config @returns {View} */
   function deck(config) {
-    const { learnData, knowData, audio } = dataFor(config);
-    if (!concepts || !learnData || !knowData) {
+    const { learnData, knowData, fallbackData, fallbacksReady, audio } = dataFor(config);
+    if (!concepts || !learnData || !knowData || !fallbacksReady) {
       return { config, ready: false, notes: [], cards: 0, counts: new Map(), local: new Map(), ctx: null, noteType: null, sample: null, audio: null };
     }
-    const input = { config, meta, concepts, learnData, knowData, audio };
+    const input = { config, meta, concepts, learnData, knowData, fallbackData, audio };
     const pair = `${config.learn}|${config.know}|${dataVersion}`;
     if (pairCache?.key !== pair) {
       pairCache = { key: pair, counts: moduleCounts(config, meta, concepts, learnData, knowData), local: localTerms(config, meta, concepts, learnData, knowData) };
@@ -235,8 +242,8 @@ export function createApp({ loader, meta, initial, random = Math.random }) {
     /** Everything buildDeck needs for the current config, or null while loading. */
     deckInput() {
       const config = store.get();
-      const { learnData, knowData, audio } = dataFor(config);
-      return concepts && learnData && knowData && audio !== undefined ? { config, meta, concepts, learnData, knowData, css, audio } : null;
+      const { learnData, knowData, fallbackData, fallbacksReady, audio } = dataFor(config);
+      return concepts && learnData && knowData && fallbacksReady && audio !== undefined ? { config, meta, concepts, learnData, knowData, fallbackData, css, audio } : null;
     },
     /** Resolves once nothing is loading. */
     async settled() {

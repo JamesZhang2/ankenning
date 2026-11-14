@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Kelime hazinesi makine tarafından taslak olarak hazırlandı ve yalnızca kısmen kontrol edildi. Geri bildirimlerinizi bekliyoruz.",
     "head.draftTopic": "taslak kelime hazinesi",
@@ -21,6 +21,9 @@
     "lang.same": "Aynı dil",
     "lang.sameNote": "kelime tanımları",
     "lang.sameHelp": "Kartlarda çeviri yerine öğrendiğiniz dilde kısa bir tanım gösterilir. O dilde basit cümleleri okuyabildiğinizde idealdir.",
+    "lang.fallback": "Ek tanım dilleri (isteğe bağlı)",
+    "lang.fallbackHelp": "Yukarıdaki dil birincil dil olarak kalır. Kartta dil adına tıklayarak gösterebileceğiniz ek çevirileri seçin. Örnek çevirileri birincil dilde kalır.",
+    "download.mergeFields": "Özgün projeden bir desteyi mi güncelliyorsunuz? Ek çeviri alanlarını eklemek ve öğrenme ilerlemenizi korumak için içe aktarırken “Not türlerini birleştir” seçeneğini etkinleştirin.",
     "lang.loading": "Kelimeler yükleniyor ({language})…",
     "lang.failed": "Kelimeler yüklenemedi ({language}). Bağlantınızı kontrol edip sayfayı yeniden yükleyin.",
     "group.germanic": "Cermen dilleri",

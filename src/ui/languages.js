@@ -19,12 +19,14 @@ export function mountLanguages(roots, app) {
   const registry = app.meta.languages.languages;
 
   /**
-   * @param {'learn' | 'know'} group @param {string} code @param {string | Live} text
+   * @param {'learn' | 'know' | 'fallback'} group @param {string} code @param {string | Live} text
    * @param {{ title?: Live, hint?: Live, lang?: string }} [opts] title: tooltip; hint: for screen readers, after the text
    */
   function chip(group, code, text, { title, hint, lang } = {}) {
-    const input = h('input', { type: 'radio', name: group, value: code, class: 'chip-input' });
-    input.addEventListener('change', () => app.update(() => ({ [group]: code })));
+    const input = h('input', { type: group === 'fallback' ? 'checkbox' : 'radio', name: group, value: code, class: 'chip-input' });
+    input.addEventListener('change', () => app.update((config) => group === 'fallback'
+      ? { fallbackLanguages: input.checked ? [...config.fallbackLanguages, code] : config.fallbackLanguages.filter((c) => c !== code) }
+      : { [group]: code }));
     if (code !== SAME) input.addEventListener('focus', () => app.prefetch(code));
     const label = h(
       'label',
@@ -36,7 +38,7 @@ export function mountLanguages(roots, app) {
     return { code, input, label };
   }
 
-  /** @param {'learn' | 'know'} group @param {string} code */
+  /** @param {'learn' | 'know' | 'fallback'} group @param {string} code */
   function languageChip(group, code) {
     const reg = registry[code];
     const name = () => languageName(code, reg.name);
@@ -50,7 +52,8 @@ export function mountLanguages(roots, app) {
   const active = /** @type {string[]} */ (app.meta.languages.active);
   const learn = active.map((code) => languageChip('learn', code));
   const know = active.map((code) => languageChip('know', code));
-  /** Each group's chips under its name; a group without active languages is left out. @param {'learn' | 'know'} name @param {typeof learn} chips */
+  const fallback = active.map((code) => languageChip('fallback', code));
+  /** Each group's chips under its name; a group without active languages is left out. @param {'learn' | 'know' | 'fallback'} name @param {typeof learn} chips */
   const grouped = (name, chips) =>
     app.meta.languages.groups.flatMap((/** @type {{ id: string, languages: string[] }} */ g) => {
       const own = chips.filter((c) => g.languages.includes(c.code));
@@ -61,10 +64,18 @@ export function mountLanguages(roots, app) {
     });
   const same = chip('know', SAME, msg('lang.same'), { title: msg('lang.sameHelp') });
   same.input.setAttribute('aria-describedby', 'same-note');
+  const fallbackStatus = h('p', { class: 'lang-status', role: 'status' });
+  const fallbacks = h('details', { class: 'fallback-languages', open: app.store.get().fallbackLanguages.length > 0 },
+    h('summary', null, msg('lang.fallback')),
+    h('p', { class: 'same-note' }, msg('lang.fallbackHelp')),
+    h('div', { role: 'group', 'aria-label': msg('lang.fallback') }, ...grouped('fallback', fallback)),
+    fallbackStatus,
+  );
   roots.learn.append(...grouped('learn', learn));
   roots.know.append(
     h('div', { class: 'same-row' }, same.label, h('span', { class: 'same-note', id: 'same-note' }, h('span', { 'aria-hidden': 'true' }, '— '), msg('lang.sameNote'))),
     ...grouped('know', know),
+    fallbacks,
   );
 
   /** Status line under a chip group: loading, or a load failure. @param {HTMLElement} el @param {string | null} code */
@@ -84,8 +95,15 @@ export function mountLanguages(roots, app) {
         c.input.disabled = c.code === config.learn;
       }
       same.input.checked = config.know === SAME;
+      fallbacks.hidden = !config.know;
+      for (const c of fallback) {
+        c.input.checked = config.fallbackLanguages.includes(c.code);
+        c.input.disabled = c.code === config.learn || c.code === config.know;
+      }
       status(roots.learnStatus, config.learn);
       status(roots.knowStatus, config.know);
+      const pending = config.fallbackLanguages.find((code) => app.isLoading(code) || app.hasFailed(code));
+      status(fallbackStatus, pending ?? null);
     },
   };
 }

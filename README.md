@@ -13,6 +13,10 @@ Ankenning is an independent project, not affiliated with or endorsed by Anki Sof
 
 Pick the language you're learning and one you speak (or same-language definitions), choose topic modules and card fields, and download an `.apkg` for Anki or AnkiDroid. Nothing is uploaded. Decks are deterministic: a newer download imports over the old deck and keeps your review history.
 
+This fork also supports **multiple definition languages**. For French with Spanish meanings and optional English help, choose French under “I’m learning”, Spanish under “I speak”, then expand “Fallback definition languages” and check English. Spanish stays visible; click **English** on a card to reveal the English meaning. Each extra language has its own Anki field (for example, `Translation_en`). Example sentences remain translated into the primary language. When updating an existing deck from the original project, enable **Merge note types** on the first import to add the fields while retaining review history.
+
+See [the custom feature and audio guide](docs/CUSTOM_FEATURES.md) for details, an example configuration, and how pronunciation audio is generated.
+
 Languages: English, German, Dutch, Swedish; Chinese, Japanese, Vietnamese, Korean; Spanish, French, Portuguese, Italian; Russian, Polish, Ukrainian, Serbian; Irish, Scottish Gaelic; Arabic, Turkish, Greek, Hungarian and Armenian. The page itself speaks all of them, Arabic right to left.
 
 The vocabulary is drafted by an AI model and partly reviewed by people. Spotted an error? Select it on a card and press Ctrl+Enter, or use the Feedback button.

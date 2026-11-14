@@ -71,6 +71,17 @@
 .translation .n { color: var(--muted); }
 .translation .m { display: inline-block; }
 
+.fallback { margin-top: 0.65em; }
+.fallback > summary {
+  width: fit-content;
+  margin: 0 auto;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.75em;
+}
+.fallback > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.fallback > .translation { margin-top: 0.3em; }
+
 hr#answer {
   border: 0;
   border-top: 1px solid var(--rule);

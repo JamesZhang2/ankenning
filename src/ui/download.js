@@ -60,6 +60,7 @@ export function mountDownload(root, app, { onSaved } = {}) {
   root.append(
     h('dl', { class: 'dl-summary' }, h('dt', null, msg('download.deck')), deck, h('dt', null, msg('download.size')), size, ...audio, h('dt', null, msg('download.file')), file),
     h('div', { class: 'dl-actions' }, button, h('span', { class: 'dl-help' }, msg('download.later'), help(msg('download.laterTopic'), updateHelp))),
+    h('p', { class: 'same-note' }, msg('download.mergeFields')),
     status,
   );
 

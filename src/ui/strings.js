@@ -33,6 +33,9 @@ export const STRINGS = {
   'lang.sameNote': 'word definitions',
   'lang.sameHelp':
     'Cards show a short definition in the language you are learning instead of a translation. Good once you can read simple sentences in it.',
+  'lang.fallback': 'Fallback definition languages (optional)',
+  'lang.fallbackHelp': 'The language above stays primary. Choose extra translations to reveal by clicking their language name on a card. Example translations stay in the primary language.',
+  'download.mergeFields': 'Updating a deck from the original project? Enable “Merge note types” when importing to add the extra translation fields and keep your review progress.',
   'lang.loading': 'Loading {language} words…',
   'lang.failed': 'Could not load the {language} words. Check your connection and reload the page.',
   'group.germanic': 'Germanic languages',

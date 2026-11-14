@@ -40,9 +40,10 @@ export async function fixtureInput(partial) {
   const config = validate({ modules: moduleOrder(meta.modules), ...partial }, meta);
   const learnData = await loader.getLanguage(/** @type {string} */ (config.learn));
   const knowData = config.know === SAME ? learnData : await loader.getLanguage(/** @type {string} */ (config.know));
+  const fallbackData = new Map(await Promise.all(config.fallbackLanguages.map(async (code) => [code, await loader.getLanguage(code)])));
   // the golden sample's clips (tests/fixtures/data/audio), as the browser loads them when audio is on
   const audio = usesAudio(meta, config) ? await loadAudioIndex(loader, meta, /** @type {string} */ (config.learn)) : null;
-  return { meta, concepts, config, learnData, knowData, audio, css: (await loader.getCardCss()) ?? '' };
+  return { meta, concepts, config, learnData, knowData, fallbackData, audio, css: (await loader.getCardCss()) ?? '' };
 }
 
 /** The clips a deck's notes name, read from their files (each its own file under the fixture's audio/). @param {{ notes: any[], audio: any }} deck */

@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Ordförrådet är maskinframtaget och bara delvis granskat. All återkoppling är välkommen.",
     "head.draftTopic": "utkastet till ordförråd",
@@ -21,6 +21,9 @@
     "lang.same": "Samma språk",
     "lang.sameNote": "ordförklaringar",
     "lang.sameHelp": "Korten visar en kort förklaring på språket du lär dig i stället för en översättning. Bra när du kan läsa enkla meningar på det.",
+    "lang.fallback": "Extra definitionsspråk (valfritt)",
+    "lang.fallbackHelp": "Språket ovan förblir huvudspråk. Välj extra översättningar som visas när du klickar på språknamnet på ett kort. Exempelöversättningar förblir på huvudspråket.",
+    "download.mergeFields": "Uppdaterar du en kortlek från originalprojektet? Aktivera ”Slå samman nottyper” vid import för att lägga till de extra översättningsfälten och behålla dina framsteg.",
     "lang.loading": "Läser in ord: {language}…",
     "lang.failed": "Kunde inte läsa in orden ({language}). Kontrollera anslutningen och ladda om sidan.",
     "group.germanic": "Germanska språk",

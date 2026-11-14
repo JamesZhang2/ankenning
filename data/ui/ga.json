@@ -1,5 +1,5 @@
 {
-  "source": "5e6401bfa3be",
+  "source": "14e617269b20",
   "texts": {
     "head.draft": "Is meaisín a dhréachtaigh an stór focal agus níl ach cuid de seiceáilte. Fáiltítear go mór roimh aiseolas.",
     "head.draftTopic": "an stór focal dréachta",
@@ -21,6 +21,9 @@
     "lang.same": "An teanga chéanna",
     "lang.sameNote": "sainmhínithe focal",
     "lang.sameHelp": "Taispeánann na cártaí sainmhíniú gearr sa teanga atá á foghlaim agat in ionad aistriúcháin. Oiriúnach nuair is féidir leat abairtí simplí a léamh inti.",
+    "lang.fallback": "Teangacha breise sainmhínithe (roghnach)",
+    "lang.fallbackHelp": "Is í an teanga thuas an phríomhtheanga fós. Roghnaigh aistriúcháin bhreise a thaispeántar nuair a chliceálann tú ar ainm na teanga ar chárta. Fanann aistriúcháin na samplaí sa phríomhtheanga.",
+    "download.mergeFields": "An bhfuil deic ón mbuntionscadal á nuashonrú agat? Cumasaigh “Cumaisc cineálacha nótaí” agus tú ag iompórtáil chun na réimsí aistriúcháin breise a chur leis agus do dhul chun cinn a choinneáil.",
     "lang.loading": "Focail á lódáil: {language}…",
     "lang.failed": "Níorbh fhéidir na focail a lódáil ({language}). Seiceáil do cheangal agus athlódáil an leathanach.",
     "group.germanic": "Teangacha Gearmánacha",

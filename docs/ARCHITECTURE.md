@@ -97,10 +97,11 @@ Keep pure logic (`state`, `deck/*`, `text/*`, `feedback/client` minus `fetch`) f
 
 ## 4. State and URL
 
-- **Config:** `{v:1, learn, know|'=', modules:[ids], fields:{id: placement}, examples:0–3, reverse, type, audio, srScript}`.
+- **Config:** `{v:1, learn, know|'=', fallbackLanguages:[codes], modules:[ids], fields:{id: placement}, examples:0–3, reverse, type, audio, srScript}`.
 - Encoded in `location.hash`, compact and human-readable, for example:
   `#v1&l=ja&k=ru&m=core-1,core-2,food&f=reading:f,ipa:o,forms:b&x=2&r=1&t=1&a=1&sr=c`
   - Only non-default field placements are written.
+  - `kl=en,sr` lists optional fallback definition languages, deduplicated in active-language order and excluding the learned/primary languages. Old links default to no fallbacks. All selected language data must load before preview/export is ready.
   - `a=1` (pronunciation audio) only while the learned language has audio (`hasAudio`); anything but `1` is off. The choice itself survives a switch to a language without audio and back.
   - Unknown keys are ignored. Invalid values fall back to defaults, keeping the rest.
 - The config is also saved to localStorage (try/catch). On load, the precedence is hash > localStorage > defaults.
@@ -176,6 +177,7 @@ Produces the HTML for each Anki field, given the note and config. All text is es
 - **Fields (fixed order, never changes within schema v1; a new field can only be appended):**
   `Word, WordRuby, TypeTarget, Disambig, Translation, Romanization, OtherScript, MeasureWord, Hanja, Forms, IPA, Examples, Related, Etymology, POS, Register, Emoji, ConceptId, Reverse, Audio`.
   - Fields switched off are left empty.
+  - This fork appends the 23 `Translation_<code>` fields listed in `src/deck/fallbacks.js`, bringing the total to 43. Every field is present even when unused. Templates show selected nonempty fields inside closed `<details>` disclosures beside the primary translation. Fallback data comes from each note's selected concept IDs, without changing note selection or identifiers. Existing collections need **Merge note types** on the first import of this schema.
   - `Reverse` is `"1"` when reverse cards are on, otherwise empty.
   - `Audio` (appended 2026-10-28) is `[sound:ankigen-<lang>-<hash>.mp3]` when the deck has audio and the word has a clip (merged notes: their shared word's), otherwise empty. A deck made before it has 19 fields: Anki then needs "Merge note types" once (§7.4).
 - **Templates:**
