@@ -8,6 +8,9 @@
 /** @typedef {{ clips: Map<string, string>, files: Map<string, ClipSource> }} AudioIndex  concept → clip (its content hash) → its bytes */
 /** @typedef {{ url: string, start: number, end: number, clips: [string, ClipSource][] }} Request  bytes [start, end) of a file */
 
+// Development serves a file per word: large decks can exceed the browser's pending-request limit.
+const MAX_CONCURRENT_FILES = 6;
+
 /**
  * Load a language's clips: the site's index (meta.json names it), else data/audio's manifest (developing).
  * @param {{ getJson: (path: string) => Promise<any>, dataBase: string }} loader @param {any} meta @param {string} code
@@ -89,13 +92,13 @@ export function planRequests(clips, { gap = 16_384, most = 0.6, max = 8 } = {}) 
 }
 
 /**
- * The bytes of these clips. Files are fetched side by side; the ranges of one file one after another, so a server
+ * The bytes of these clips. At most six files are fetched at a time; the ranges of one file one after another, so a server
  * that answers a range with the whole file is asked only once. onProgress(received, total) follows the download.
  * @param {Map<string, ClipSource>} clips
- * @param {{ fetch?: (url: string, init?: RequestInit) => Promise<Response>, onProgress?: (received: number, total: number) => void }} [opts]
+ * @param {{ fetch?: (url: string, init?: RequestInit) => Promise<Response>, onProgress?: (received: number, total: number) => void, timeoutMs?: number }} [opts]
  * @returns {Promise<Map<string, Uint8Array>>} clip → its bytes
  */
-export async function fetchClips(clips, { fetch: get = (url, init) => fetch(url, init), onProgress } = {}) {
+export async function fetchClips(clips, { fetch: get = (url, init) => fetch(url, init), onProgress, timeoutMs = 30_000 } = {}) {
   /** @type {Map<string, Request[]>} */
   const byUrl = new Map();
   for (const r of planRequests(clips)) byUrl.set(r.url, [...(byUrl.get(r.url) ?? []), r]);
@@ -110,18 +113,33 @@ export async function fetchClips(clips, { fetch: get = (url, init) => fetch(url,
       out.set(hash, bytes.slice(c.offset - start, c.offset - start + c.length));
     }
   };
-  await Promise.all(
-    [...byUrl.values()].map(async (list) => {
-      /** @type {Uint8Array | null} the whole file, once a server sent it */
-      let file = null;
-      for (const r of list) {
-        if (file) {
-          take(r, file, 0);
-          continue;
-        }
-        const size = r.clips[0][1].size;
-        const whole = r.start === 0 && r.end === size;
-        const res = await get(r.url, whole ? undefined : { headers: { Range: `bytes=${r.start}-${r.end - 1}` } });
+  const lists = [...byUrl.values()];
+  let next = 0;
+  let stopped = false;
+  /** @type {Set<AbortController>} */
+  const active = new Set();
+
+  /** @param {Request[]} list */
+  async function fetchFile(list) {
+    /** @type {Uint8Array | null} the whole file, once a server sent it */
+    let file = null;
+    for (const r of list) {
+      if (stopped) return;
+      if (file) {
+        take(r, file, 0);
+        continue;
+      }
+      const size = r.clips[0][1].size;
+      const whole = r.start === 0 && r.end === size;
+      const controller = new AbortController();
+      active.add(controller);
+      let timedOut = false;
+      const timer = setTimeout(() => {
+        timedOut = true;
+        controller.abort();
+      }, timeoutMs);
+      try {
+        const res = await get(r.url, { signal: controller.signal, ...(whole ? {} : { headers: { Range: `bytes=${r.start}-${r.end - 1}` } }) });
         if (!res.ok) throw new Error(`${r.url}: HTTP ${res.status}`);
         const partial = res.status === 206;
         if (partial && !(res.headers.get('content-range') ?? '').startsWith(`bytes ${r.start}-`)) throw new Error(`${r.url}: unexpected range`);
@@ -129,9 +147,26 @@ export async function fetchClips(clips, { fetch: get = (url, init) => fetch(url,
         const bytes = await read(res, (n) => onProgress?.((received += n), total));
         if (partial) take(r, bytes, r.start);
         else take(r, (file = bytes), 0);
+      } catch (error) {
+        if (timedOut) throw new Error(`${r.url}: audio download timed out`);
+        throw error;
+      } finally {
+        clearTimeout(timer);
+        active.delete(controller);
       }
-    }),
-  );
+    }
+  }
+
+  async function worker() {
+    try {
+      while (!stopped && next < lists.length) await fetchFile(lists[next++]);
+    } catch (error) {
+      stopped = true;
+      for (const controller of active) controller.abort();
+      throw error;
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(MAX_CONCURRENT_FILES, lists.length) }, () => worker()));
   return out;
 }
 

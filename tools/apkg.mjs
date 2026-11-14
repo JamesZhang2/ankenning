@@ -61,8 +61,9 @@ if (!config?.learn || !config.know || !config.modules.length) {
 const concepts = await loader.getConcepts();
 const learnData = await loader.getLanguage(config.learn);
 const knowData = config.know === SAME ? learnData : await loader.getLanguage(config.know);
+const fallbackData = new Map(await Promise.all(config.fallbackLanguages.map(async (code) => [code, await loader.getLanguage(code)])));
 const audio = usesAudio(meta, config) ? await loadAudioIndex(loader, meta, config.learn) : null;
-const deck = buildDeck({ config, meta, concepts, learnData, knowData, audio, css: (await loader.getCardCss()) ?? '' });
+const deck = buildDeck({ config, meta, concepts, learnData, knowData, fallbackData, audio, css: (await loader.getCardCss()) ?? '' });
 
 // Each clip is its own file under <data>/audio/<code>/ here (the site serves them from packs).
 /** @type {Map<string, Uint8Array>} */

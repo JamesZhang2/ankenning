@@ -239,6 +239,80 @@ test('fetching clips: byte ranges where a deck needs little of a pack, the whole
   }
 });
 
+test('large local decks limit concurrency through the response body and download every clip', async () => {
+  const files = new Map(Array.from({ length: 1800 }, (_, i) => [`clip${i}`, { url: `${i}.mp3`, offset: 0, length: 1, size: 1 }]));
+  let active = 0;
+  let peak = 0;
+  const progress = [];
+  const result = await fetchClips(files, {
+    fetch: async (url) => {
+      active++;
+      peak = Math.max(peak, active);
+      return new Response(new ReadableStream({
+        start(controller) {
+          setImmediate(() => {
+            controller.enqueue(Uint8Array.of(Number.parseInt(url) % 256));
+            controller.close();
+            active--;
+          });
+        },
+      }));
+    },
+    onProgress: (got, total) => progress.push(got / total),
+  });
+  assert.equal(peak, 6, 'requests stay bounded until the bodies finish reading');
+  assert.equal(active, 0);
+  assert.equal(result.size, files.size);
+  for (const [hash, source] of files) assert.deepEqual(result.get(hash), Uint8Array.of(Number.parseInt(source.url) % 256));
+  assert.equal(progress.at(-1), 1);
+  assert.ok(progress.every((p, i) => i === 0 || p >= progress[i - 1]));
+});
+
+test('stalled audio requests time out both before headers and during the body', async () => {
+  const files = new Map([['clip', { url: 'stalled.mp3', offset: 0, length: 1, size: 1 }]]);
+  for (const body of [false, true]) {
+    let aborted = false;
+    await assert.rejects(fetchClips(files, {
+      timeoutMs: 20,
+      fetch: async (_, { signal }) => {
+        if (!body) return new Promise((resolve, reject) => signal.addEventListener('abort', () => {
+          aborted = true;
+          reject(signal.reason);
+        }, { once: true }));
+        return new Response(new ReadableStream({
+          start(controller) {
+            signal.addEventListener('abort', () => {
+              aborted = true;
+              controller.error(signal.reason);
+            }, { once: true });
+          },
+        }));
+      },
+    }), /stalled\.mp3: audio download timed out/);
+    assert.equal(aborted, true);
+  }
+});
+
+test('a failed audio request cancels in-flight downloads and stops the queue; retry works', async () => {
+  const files = new Map(Array.from({ length: 30 }, (_, i) => [`clip${i}`, { url: `${i}.mp3`, offset: 0, length: 1, size: 1 }]));
+  const started = [];
+  const aborted = [];
+  await assert.rejects(fetchClips(files, {
+    fetch: async (url, { signal }) => {
+      started.push(url);
+      if (url === '0.mp3') return new Response(null, { status: 404 });
+      return new Promise((resolve, reject) => signal.addEventListener('abort', () => {
+        aborted.push(url);
+        reject(signal.reason);
+      }, { once: true }));
+    },
+  }), /0\.mp3: HTTP 404/);
+  assert.equal(started.length, 6);
+  assert.deepEqual(aborted, started.slice(1));
+  const retried = await fetchClips(files, { fetch: async () => new Response(Uint8Array.of(42)) });
+  assert.equal(retried.size, files.size);
+});
+
 // ---------------------------------------------------------------- decks, templates, preview, .apkg
 
 /** Field tags used by a template (section tags excluded). @param {string} tpl */
@@ -295,9 +369,9 @@ test('.apkg: the clips as zip entries 0, 1, … and the media map, in order of f
 test('tools/apkg.mjs reads the clips from data/audio and writes the same package as buildApkg', async () => {
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'ankenning-apkg-'));
   try {
-    const args = ['tools/apkg.mjs', '#v1&l=ja&k=de&m=core-1,residence&r=1&a=1', '--data', 'tests/fixtures/data', '--out', out, '--now', String(NOW)];
+    const args = ['tools/apkg.mjs', '#v1&l=ja&k=de&kl=en&m=core-1,residence&r=1&a=1', '--data', 'tests/fixtures/data', '--out', out, '--now', String(NOW)];
     assert.match(execFileSync(process.execPath, args, { cwd: REPO, encoding: 'utf8' }), /14 notes, 28 cards, 14 clips/);
-    const deck = await fixtureDeck({ learn: 'ja', know: 'de', modules: ['core-1', 'residence'], reverse: true, audio: true });
+    const deck = await fixtureDeck({ learn: 'ja', know: 'de', fallbackLanguages: ['en'], modules: ['core-1', 'residence'], reverse: true, audio: true });
     const expected = await buildApkg({ SQL: await loadSqlJs(), config: deck.config, meta: deck.meta, deck, media: fixtureMedia(deck), now: NOW });
     assert.deepEqual(new Uint8Array(fs.readFileSync(path.join(out, apkgFileName(deck.config, deck.meta)))), expected);
   } finally {
