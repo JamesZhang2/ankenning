@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Słownictwo zostało przygotowane maszynowo i jest tylko częściowo sprawdzone. Uwagi są bardzo mile widziane.",
     "head.draftTopic": "wstępna wersja słownictwa",
@@ -175,7 +175,7 @@
     "audio.label": "Wymowa (audio)",
     "audio.warning": "Najbardziej eksperymentalna część Ankenning, wciąż prototyp: nagrania są generowane maszynowo i nikt ich nie sprawdził. Akcent wyrazowy, odczyty i wymowa mogą być błędne, więc nie polegaj na nich. Jeśli to twój język ojczysty i nagrania brzmią źle, daj nam znać przyciskiem „Opinia”: w razie potrzeby usuniemy audio dla tego języka.",
     "audio.oldDecks": "Masz już talię Ankenning zaimportowaną przed dodaniem audio? Przy pierwszym imporcie aktualizacji zaznacz „Merge note types” w opcjach importu Anki, inaczej Anki pominie twoje istniejące notatki, bo ich typ ma teraz pole na audio.",
-    "audio.help1": "Dodaje nagranie każdego słowa, którego się uczysz: tylko samego słowa, bez przykładów, tłumaczenia i definicji. Odtwarza się na przodzie fiszek zwykłych i na tyle fiszek odwrotnych.",
+    "audio.help1": "Dodaje nagranie każdego słowa, którego się uczysz: tylko samego słowa, bez przykładów, tłumaczenia i definicji. Odtwarza się po obu stronach fiszek zwykłych i na tyle fiszek odwrotnych.",
     "audio.help2": "Nagrania powstają w Google Cloud Text-to-Speech.",
     "audio.help3": "Aby później usunąć pliki dźwiękowe, wyłącz audio, pobierz talię i zaimportuj ją ponownie, a potem usuń w Anki nieużywane pliki przez Tools → Check Media.",
     "audio.play": "Odtwórz słowo",

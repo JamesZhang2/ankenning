@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Il vocabolario è stato redatto da una macchina e rivisto solo in parte. Ogni segnalazione è benvenuta.",
     "head.draftTopic": "il vocabolario in bozza",
@@ -175,7 +175,7 @@
     "audio.label": "Audio della pronuncia",
     "audio.warning": "La parte più sperimentale di Ankenning, ancora un prototipo: le registrazioni sono generate da una macchina e nessuno le ha controllate. Accento, letture e pronuncia possono essere sbagliati, quindi non farci affidamento. Se sei madrelingua e ti sembrano scadenti, faccelo sapere con il pulsante Feedback: se serve, togliamo l’audio di una lingua.",
     "audio.oldDecks": "Hai importato un mazzo Ankenning prima che arrivasse l’audio? La prima volta che importi un aggiornamento, spunta “Merge note types” nelle opzioni di importazione di Anki; altrimenti Anki salta le note esistenti, perché il loro tipo di nota ora ha un campo per l’audio.",
-    "audio.help1": "Aggiunge una registrazione di ogni parola che impari: solo la parola, non gli esempi, la traduzione o la definizione. Si sente sul fronte delle carte dirette e sul retro delle carte inverse.",
+    "audio.help1": "Aggiunge una registrazione di ogni parola che impari: solo la parola, non gli esempi, la traduzione o la definizione. Si sente su entrambi i lati delle carte dirette e sul retro delle carte inverse.",
     "audio.help2": "Le registrazioni sono create con Google Cloud Text-to-Speech.",
     "audio.help3": "Per eliminare in seguito i file audio, disattiva l’audio, scarica il mazzo e importalo di nuovo, poi elimina i file inutilizzati con Tools → Check Media in Anki.",
     "audio.play": "Ascolta la parola",

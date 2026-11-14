@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Bộ từ vựng do máy soạn và mới được kiểm tra một phần. Mọi góp ý đều rất đáng quý.",
     "head.draftTopic": "bộ từ vựng bản nháp",
@@ -175,7 +175,7 @@
     "audio.label": "Âm thanh phát âm",
     "audio.warning": "Phần thử nghiệm nhất của Ankenning, vẫn đang là bản mẫu: các bản ghi âm do máy tạo ra và chưa ai kiểm tra. Trọng âm, cách đọc và giọng có thể sai, vì vậy đừng quá tin vào chúng. Nếu bạn là người bản ngữ và thấy chúng nghe tệ, hãy báo cho chúng tôi bằng nút Góp ý: khi cần, chúng tôi sẽ gỡ âm thanh của một ngôn ngữ.",
     "audio.oldDecks": "Bạn đã nhập một bộ thẻ Ankenning từ trước khi có âm thanh? Lần đầu nhập bản cập nhật, hãy đánh dấu “Merge note types” trong tùy chọn nhập của Anki; nếu không Anki sẽ bỏ qua các ghi chú hiện có của bạn, vì kiểu ghi chú của chúng giờ đã có thêm một trường cho âm thanh.",
-    "audio.help1": "Thêm bản ghi âm cho mỗi từ bạn học: chỉ từ đó, không có ví dụ, bản dịch hay lời giải nghĩa. Âm thanh phát ở mặt trước của thẻ xuôi và mặt sau của thẻ đảo ngược.",
+    "audio.help1": "Thêm bản ghi âm cho mỗi từ bạn học: chỉ từ đó, không có ví dụ, bản dịch hay lời giải nghĩa. Âm thanh phát ở cả hai mặt của thẻ xuôi và mặt sau của thẻ đảo ngược.",
     "audio.help2": "Các bản ghi âm được tạo bằng Google Cloud Text-to-Speech.",
     "audio.help3": "Để xóa các tệp âm thanh sau này, hãy tắt âm thanh, tải bộ thẻ xuống và nhập lại, rồi xóa các tệp không dùng bằng Tools → Check Media trong Anki.",
     "audio.play": "Phát âm từ",

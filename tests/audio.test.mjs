@@ -329,11 +329,11 @@ test('the Audio field: the word’s clip with audio on, empty otherwise; merged 
   assert.ok(!/Audio/.test(off.noteType.templates.map((t) => t.qfmt + t.afmt).join('')), 'no audio, no Audio section');
 });
 
-test('templates: the clip plays on the forward question and the reverse answer only', async () => {
+test('templates: audio appears on both forward faces and the reverse answer', async () => {
   const { noteType } = await fixtureDeck({ learn: 'de', know: 'en', reverse: true, type: true, audio: true });
   const [fwd, rev] = noteType.templates;
   assert.ok(fieldsIn(fwd.qfmt).includes('Audio'), 'forward question');
-  assert.ok(!fieldsIn(fwd.afmt).includes('Audio'), 'the forward answer does not play it again');
+  assert.equal(fieldsIn(fwd.afmt).filter((f) => f === 'Audio').length, 1, 'one replay button on the forward answer');
   assert.ok(!fieldsIn(rev.qfmt).includes('Audio'), 'never on the reverse question');
   assert.ok(fieldsIn(rev.afmt.split('<hr id=answer>')[1]).includes('Audio'), 'reverse answer');
   assert.ok(!fieldsIn(rev.afmt.split('<hr id=answer>')[0]).includes('Audio'));
@@ -346,7 +346,7 @@ test('preview: [sound:…] is a play button where the page draws one, and text i
   const fwd = renderCard(deck.noteType, note.fields, 0, { sound });
   const rev = renderCard(deck.noteType, note.fields, 1, { sound });
   const button = `<button class="ag-play" data-name="${note.fields.Audio.slice(7, -1)}"></button>`;
-  assert.ok(fwd?.front.includes(button) && !fwd.back.includes('ag-play'));
+  assert.ok(fwd?.front.includes(button) && fwd.back.includes(button));
   assert.ok(rev?.back.includes(button) && !rev.front.includes('ag-play'));
   assert.match(renderTemplate('{{Audio}}', note.fields), /^\[sound:ankigen-de-[0-9a-f]{16}\.mp3\]$/);
 });

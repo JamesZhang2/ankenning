@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Ordförrådet är maskinframtaget och bara delvis granskat. All återkoppling är välkommen.",
     "head.draftTopic": "utkastet till ordförråd",
@@ -175,7 +175,7 @@
     "audio.label": "Uttalsljud",
     "audio.warning": "Den mest experimentella delen av Ankenning, fortfarande en prototyp: inspelningarna är maskingenererade och ingen har kontrollerat dem. Betoning, läsningar och accent kan vara fel, så lita inte på dem. Om du har språket som modersmål och de låter dåligt, berätta det för oss med knappen Feedback: vid behov tar vi bort ljudet för ett språk.",
     "audio.oldDecks": "Importerade du en Ankenning-lek innan ljudet lades till? Första gången du importerar en uppdatering, kryssa i ”Merge note types” i Ankis importinställningar; annars hoppar Anki över dina befintliga anteckningar, eftersom deras anteckningstyp nu har ett fält för ljudet.",
-    "audio.help1": "Lägger till en inspelning av varje ord du lär dig: bara ordet, inte exemplen, översättningen eller förklaringen. Den spelas på framsidan av framåtkort och på baksidan av omvända kort.",
+    "audio.help1": "Lägger till en inspelning av varje ord du lär dig: bara ordet, inte exemplen, översättningen eller förklaringen. Den spelas på båda sidor av framåtkort och på baksidan av omvända kort.",
     "audio.help2": "Inspelningarna görs med Google Cloud Text-to-Speech.",
     "audio.help3": "Om du senare vill ta bort ljudfilerna: stäng av ljudet, ladda ner leken och importera den igen, och radera sedan de oanvända filerna med Tools → Check Media i Anki.",
     "audio.play": "Spela upp ordet",

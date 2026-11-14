@@ -19,7 +19,7 @@ export const AUDIO_STRINGS = {
   'audio.oldDecks':
     'Already imported an Ankenning deck before audio was added? The first time you import an update, tick “Merge note types” in Anki’s import options; otherwise Anki skips your existing notes, because their note type now has a field for the audio.',
   'audio.help1':
-    'Adds a recording of each word you learn: the word only, not its examples, translation or definition. It plays on the front of forward cards and on the back of reverse cards.',
+    'Adds a recording of each word you learn: the word only, not its examples, translation or definition. It is available on both sides of forward cards and on the back of reverse cards.',
   'audio.help2': 'The recordings are made with Google Cloud Text-to-Speech.',
   'audio.help3':
     'To remove the sound files later, turn the audio off, download the deck and import it again, then delete the unused files with Tools → Check Media in Anki.',

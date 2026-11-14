@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Le vocabulaire a été rédigé par une machine et n'est que partiellement relu. Vos retours sont les bienvenus.",
     "head.draftTopic": "le vocabulaire en brouillon",
@@ -175,7 +175,7 @@
     "audio.label": "Prononciation audio",
     "audio.warning": "La partie la plus expérimentale d'Ankenning, encore un prototype : les enregistrements sont générés par une machine et personne ne les a vérifiés. L'accent tonique, les lectures et l'accent peuvent être faux : ne vous y fiez pas. Si c'est votre langue maternelle et que les enregistrements sonnent mal, signalez-le avec le bouton « Commentaires » : au besoin, nous retirerons l'audio de cette langue.",
     "audio.oldDecks": "Vous avez déjà importé un deck Ankenning avant l'arrivée de l'audio ? Lors du premier import d'une mise à jour, cochez « Merge note types » dans les options d'import d'Anki ; sinon, Anki ignorera vos notes existantes, car leur type de note comporte désormais un champ pour l'audio.",
-    "audio.help1": "Ajoute un enregistrement de chaque mot que vous apprenez : le mot seul, sans ses exemples, sa traduction ni sa définition. Il est joué au recto des cartes directes et au verso des cartes inversées.",
+    "audio.help1": "Ajoute un enregistrement de chaque mot que vous apprenez : le mot seul, sans ses exemples, sa traduction ni sa définition. Il est joué des deux côtés des cartes directes et au verso des cartes inversées.",
     "audio.help2": "Les enregistrements sont réalisés avec Google Cloud Text-to-Speech.",
     "audio.help3": "Pour supprimer plus tard les fichiers sonores, désactivez l'audio, téléchargez le deck et importez-le de nouveau, puis supprimez dans Anki les fichiers inutilisés avec Tools → Check Media.",
     "audio.play": "Écouter le mot",

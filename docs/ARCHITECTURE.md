@@ -188,7 +188,7 @@ Produces the HTML for each Anki field, given the note and config. All text is es
   - On reverse cards every learning-side field goes to the answer.
   - Japanese: the front uses `WordRuby` only when Reading = Front; the back uses `WordRuby` whenever Reading ≠ Off.
   - Type the answer: `{{type:TypeTarget}}` on the reverse front and back, only when enabled.
-  - Audio (only when the deck has audio): `{{#Audio}}<div class="audio">{{Audio}}</div>{{/Audio}}` under the word on the forward question and on the reverse answer, never on the reverse question. Anki plays every `[sound:]` of the side it shows (`{{FrontSide}}` would not replay it, but these templates repeat the question instead), so the forward answer leaves it out: the word plays once, on the question. Checked with Anki's own `question_av_tags`/`answer_av_tags`.
+  - Audio (only when the deck has audio): `{{#Audio}}<div class="audio">{{Audio}}</div>{{/Audio}}` under the word on both forward faces and on the reverse answer, never on the reverse question. Both forward faces reference the same clip; no extra media is needed. Anki may automatically play the clip on each face according to its autoplay settings.
 - **CSS:** `css/card.css`, embedded verbatim.
   - Night mode via `.nightMode`/`.night_mode`.
   - `lang` attributes on learned/known blocks so CJK picks correct glyphs (zh-Hans vs ja); `dir` too in a deck with Arabic, which has its own typeface, size and line height for its vowel marks.

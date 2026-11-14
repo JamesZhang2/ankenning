@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Das Vokabular wurde maschinell entworfen und ist erst teilweise geprüft. Feedback ist sehr willkommen.",
     "head.draftTopic": "Vokabular-Entwurf",
@@ -175,7 +175,7 @@
     "audio.label": "Aussprache als Audio",
     "audio.warning": "Der experimentellste Teil von Ankenning, noch ein Prototyp: Die Aufnahmen sind maschinell erzeugt und von niemandem geprüft. Betonung, Lesung und Akzent können falsch sein, also verlass dich nicht darauf. Du sprichst die Sprache als Muttersprache und die Aufnahmen klingen schlecht? Sag uns über den Button „Feedback“ Bescheid: Wenn nötig, nehmen wir das Audio einer Sprache wieder heraus.",
     "audio.oldDecks": "Hast du schon ein Ankenning-Deck importiert, bevor es Audio gab? Setze beim ersten Import eines Updates in Ankis Importoptionen das Häkchen bei „Merge note types“, sonst überspringt Anki deine vorhandenen Notizen: Ihr Notiztyp hat jetzt ein Feld für das Audio.",
-    "audio.help1": "Fügt eine Aufnahme jedes Wortes hinzu, das du lernst: nur das Wort, nicht seine Beispiele, Übersetzung oder Definition. Sie wird auf der Vorderseite der Vorwärtskarten und auf der Rückseite der umgekehrten Karten abgespielt.",
+    "audio.help1": "Fügt eine Aufnahme jedes Wortes hinzu, das du lernst: nur das Wort, nicht seine Beispiele, Übersetzung oder Definition. Sie wird auf beiden Seiten der Vorwärtskarten und auf der Rückseite der umgekehrten Karten abgespielt.",
     "audio.help2": "Die Aufnahmen werden mit Google Cloud Text-to-Speech erzeugt.",
     "audio.help3": "Um die Audiodateien später zu entfernen, schalte das Audio aus, lade das Deck herunter und importiere es erneut. Lösche dann in Anki die ungenutzten Dateien mit Tools → Check Media.",
     "audio.play": "Wort abspielen",

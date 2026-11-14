@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "De woordenschat is machinaal opgesteld en nog maar deels gecontroleerd. Feedback is heel welkom.",
     "head.draftTopic": "de conceptwoordenschat",
@@ -175,7 +175,7 @@
     "audio.label": "Uitspraak (audio)",
     "audio.warning": "Het meest experimentele deel van Ankenning, nog maar een prototype: de opnames zijn machinaal gemaakt en niemand heeft ze gecontroleerd. Klemtoon, lezing en accent kunnen fout zijn, dus vertrouw er niet op. Is het je moedertaal en klinken de opnames slecht? Laat het ons weten met de knop ‘Feedback’: zo nodig halen we de audio van die taal weg.",
     "audio.oldDecks": "Heb je al een Ankenning-deck geïmporteerd voordat er audio was? Vink de eerste keer dat je een update importeert ‘Merge note types’ aan in de importopties van Anki; anders slaat Anki je bestaande notities over, omdat hun notitietype nu een veld voor de audio heeft.",
-    "audio.help1": "Voegt een opname toe van elk woord dat je leert: alleen het woord, niet de voorbeelden, de vertaling of de definitie. De opname speelt op de voorkant van gewone kaarten en op de achterkant van omgekeerde kaarten.",
+    "audio.help1": "Voegt een opname toe van elk woord dat je leert: alleen het woord, niet de voorbeelden, de vertaling of de definitie. De opname speelt op beide kanten van gewone kaarten en op de achterkant van omgekeerde kaarten.",
     "audio.help2": "De opnames worden gemaakt met Google Cloud Text-to-Speech.",
     "audio.help3": "Wil je de geluidsbestanden later verwijderen? Zet de audio uit, download het deck en importeer het opnieuw, en verwijder daarna in Anki de ongebruikte bestanden met Tools → Check Media.",
     "audio.play": "Woord afspelen",

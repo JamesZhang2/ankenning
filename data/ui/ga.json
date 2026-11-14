@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Is meaisín a dhréachtaigh an stór focal agus níl ach cuid de seiceáilte. Fáiltítear go mór roimh aiseolas.",
     "head.draftTopic": "an stór focal dréachta",
@@ -175,7 +175,7 @@
     "audio.label": "Fuaimniú (fuaim)",
     "audio.warning": "An chuid is turgnamhaí de Ankenning, fréamhshamhail fós: is meaisín a ghin na taifeadtaí agus níor sheiceáil aon duine iad. D’fhéadfadh an bhéim, na léamha agus an blas a bheith mícheart, mar sin ná bí ag brath orthu. Más cainteoir dúchais thú agus nach bhfuil siad go maith, inis dúinn leis an gcnaipe Aiseolas: bainfimid fuaim teanga anuas más gá.",
     "audio.oldDecks": "Ar iompórtáil tú paca Ankenning sular cuireadh fuaim leis? An chéad uair a iompórtálfaidh tú nuashonrú, cuir tic le “Merge note types” i roghanna iompórtála Anki; murach sin, scipeálfaidh Anki do nótaí, mar tá réimse don fhuaim ag a gcineál nóta anois.",
-    "audio.help1": "Cuireann sé taifeadadh de gach focal atá á fhoghlaim agat leis: an focal amháin, ní a shamplaí, a aistriúchán ná a shainmhíniú. Seinntear é ar aghaidh na gcártaí díreacha agus ar chúl na gcártaí droim ar ais.",
+    "audio.help1": "Cuireann sé taifeadadh de gach focal atá á fhoghlaim agat leis: an focal amháin, ní a shamplaí, a aistriúchán ná a shainmhíniú. Seinntear é ar an dá thaobh de na cártaí díreacha agus ar chúl na gcártaí droim ar ais.",
     "audio.help2": "Déantar na taifeadtaí le Google Cloud Text-to-Speech.",
     "audio.help3": "Chun na comhaid fuaime a bhaint níos déanaí, múch an fhuaim, íoslódáil an paca agus iompórtáil arís é, ansin scrios na comhaid nach n-úsáidtear le Tools → Check Media in Anki.",
     "audio.play": "Seinn an focal",

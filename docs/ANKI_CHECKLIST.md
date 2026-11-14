@@ -232,7 +232,7 @@ Repeat a shorter round on the phone, in a fresh state (or after deleting the des
 - [ ] **Night mode** (⋮ → Night mode, or Settings → Appearance): readable, with no white boxes.
 - [ ] **Deck description:** the deck's overview screen shows the description, and its link opens the browser.
 - [ ] **Step 9:** the full-size deck imports in reasonable time.
-- [ ] **Step 10:** the clip plays when the forward front appears and from its button, not again on the forward answer, not on the reverse front, and on the reverse back. Copy the file over again and import it a second time: no new media.
+- [ ] **Step 10:** the audio button works on both the forward front and answer and on the reverse back, and is absent from the reverse front. With autoplay enabled, Anki may also play it when the answer appears. Copy the file over again and import it a second time: no new media.
 - [ ] **Step 11:** after the audio-off file, Check Media (⋮ → Check media, or Settings → Advanced) lists the unused clips. Tell me the menu path in your version.
 - [ ] **Step 12:** the Arabic cards read right to left as on desktop, and the Arabic keyboard types into the answer box.
 

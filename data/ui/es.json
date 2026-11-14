@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "El vocabulario lo ha redactado una máquina y solo está revisado en parte. Tus comentarios son muy bienvenidos.",
     "head.draftTopic": "el vocabulario en borrador",
@@ -175,7 +175,7 @@
     "audio.label": "Audio de pronunciación",
     "audio.warning": "La parte más experimental de Ankenning, todavía un prototipo: las grabaciones las genera una máquina y nadie las ha revisado. La acentuación, las lecturas y el acento pueden estar mal, así que no te fíes de ellas. Si es tu lengua materna y las grabaciones suenan mal, avísanos con el botón «Comentarios»: si hace falta, retiraremos el audio de ese idioma.",
     "audio.oldDecks": "¿Ya has importado un mazo de Ankenning antes de que hubiera audio? La primera vez que importes una actualización, marca «Merge note types» en las opciones de importación de Anki; si no, Anki omitirá tus notas existentes, porque su tipo de nota ahora tiene un campo para el audio.",
-    "audio.help1": "Añade una grabación de cada palabra que aprendes: solo la palabra, sin sus ejemplos, su traducción ni su definición. Suena en el anverso de las tarjetas directas y en el reverso de las inversas.",
+    "audio.help1": "Añade una grabación de cada palabra que aprendes: solo la palabra, sin sus ejemplos, su traducción ni su definición. Suena en ambos lados de las tarjetas directas y en el reverso de las inversas.",
     "audio.help2": "Las grabaciones se hacen con Google Cloud Text-to-Speech.",
     "audio.help3": "Para quitar los archivos de sonido más adelante, desactiva el audio, descarga el mazo y vuelve a importarlo; después borra en Anki los archivos que ya no se usan con Tools → Check Media.",
     "audio.play": "Reproducir la palabra",

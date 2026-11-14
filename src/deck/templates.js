@@ -7,7 +7,7 @@
 //            makes the card only when the Reverse field is filled. Every row about the learned word goes
 //            to the answer; only the translation and concept rows placed on Front (POS, register, emoji)
 //            stay on the question. Type the answer adds {{type:TypeTarget}} to both sides.
-//   Audio:   only on the forward question and the reverse answer (ARCHITECTURE §7.1).
+//   Audio:   on both forward faces and the reverse answer (ARCHITECTURE §7.1).
 // Captions come from labels.json in the known language. data-field / data-dir / data-side let the site
 // tell which field a selection came from (feedback reports). In a deck with a right-to-left language every block
 // also says its direction (fields.js: learn.attrs, know.attrs), captions and the typed answer included.
@@ -107,7 +107,7 @@ export function noteType(ctx, css) {
   const forwardBack = card(
     'forward',
     'back',
-    fwdQuestion(reading !== 'off') + '<hr id=answer>' + translation(ctx, 'translation') + sections(ctx, (_, p) => p === 'back'),
+    fwdQuestion(reading !== 'off', audio) + '<hr id=answer>' + translation(ctx, 'translation') + sections(ctx, (_, p) => p === 'back'),
   );
 
   // Reverse: only the translation and concept rows placed on Front ask the question.

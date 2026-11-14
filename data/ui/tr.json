@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Kelime hazinesi makine tarafından taslak olarak hazırlandı ve yalnızca kısmen kontrol edildi. Geri bildirimlerinizi bekliyoruz.",
     "head.draftTopic": "taslak kelime hazinesi",
@@ -175,7 +175,7 @@
     "audio.label": "Telaffuz sesi",
     "audio.warning": "Ankenning'in en deneysel bölümü, henüz bir prototip: kayıtlar makineyle üretildi ve kimse kontrol etmedi. Vurgu, okunuş ve aksan yanlış olabilir; bu yüzden bunlara güvenmeyin. Ana diliniz buysa ve kayıtlar kötü geliyorsa, “Geri bildirim” düğmesiyle bize bildirin: gerekirse o dilin sesini kaldırırız.",
     "audio.oldDecks": "Ses eklenmeden önce bir Ankenning destesini içe aktardınız mı? Bir güncellemeyi ilk kez içe aktarırken Anki'nin içe aktarma seçeneklerinde “Merge note types” seçeneğini işaretleyin; aksi hâlde Anki mevcut notlarınızı atlar, çünkü not türlerinde artık ses için bir alan var.",
-    "audio.help1": "Öğrendiğiniz her kelimenin kaydını ekler: yalnızca kelimenin kendisini; örnekleri, çevirisi veya tanımı eklenmez. Kayıt, düz kartların ön yüzünde ve ters kartların arka yüzünde çalar.",
+    "audio.help1": "Öğrendiğiniz her kelimenin kaydını ekler: yalnızca kelimenin kendisini; örnekleri, çevirisi veya tanımı eklenmez. Kayıt, düz kartların her iki yüzünde ve ters kartların arka yüzünde çalar.",
     "audio.help2": "Kayıtlar Google Cloud Text-to-Speech ile yapılır.",
     "audio.help3": "Ses dosyalarını daha sonra kaldırmak için sesi kapatın, desteyi indirip yeniden içe aktarın, ardından Anki'de kullanılmayan dosyaları Tools → Check Media ile silin.",
     "audio.play": "Kelimeyi çal",

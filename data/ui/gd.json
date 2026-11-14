@@ -1,5 +1,5 @@
 {
-  "source": "14e617269b20",
+  "source": "74522fe03efe",
   "texts": {
     "head.draft": "Chaidh am briathrachas a dhreachdadh le inneal agus cha deach ach pàirt dheth a sgrùdadh. Tha fàilte mhòr air beachdan.",
     "head.draftTopic": "am briathrachas dreachd",
@@ -175,7 +175,7 @@
     "audio.label": "Fuaimneachadh (fuaim)",
     "audio.warning": "Am pàirt as deuchainniche de Ankenning, prototaip fhathast: chaidh na clàraidhean a chruthachadh le inneal agus cha do rinn duine sgrùdadh orra. Faodaidh am beum, na leughaidhean agus an dualchainnt a bhith ceàrr, mar sin na cuir earbsa annta. Mas e fileantach dùthchasach a th’ annad agus ma tha iad dona, innis dhuinn leis a’ phutan Beachdan: bheir sinn air falbh fuaim cànain ma bhios feum air.",
     "audio.oldDecks": "An do dh’ion-phortaich thu pasgan Ankenning mus deach fuaim a chur ris? A’ chiad turas a nì thu ion-phortadh air ùrachadh, cuir cromag ri “Merge note types” ann an roghainnean ion-phortaidh Anki; air neo leumaidh Anki thairis air na nòtaichean agad, oir tha raon airson na fuaime aig an seòrsa nòta aca a-nis.",
-    "audio.help1": "Cuiridh e clàradh de gach facal a tha thu ag ionnsachadh ris: am facal a-mhàin, chan e na h-eisimpleirean, an t-eadar-theangachadh no am mìneachadh aige. Cluichidh e air aghaidh nan cairtean air adhart agus air cùl nan cairtean air ais.",
+    "audio.help1": "Cuiridh e clàradh de gach facal a tha thu ag ionnsachadh ris: am facal a-mhàin, chan e na h-eisimpleirean, an t-eadar-theangachadh no am mìneachadh aige. Cluichidh e air gach taobh de na cairtean air adhart agus air cùl nan cairtean air ais.",
     "audio.help2": "Thèid na clàraidhean a dhèanamh le Google Cloud Text-to-Speech.",
     "audio.help3": "Gus na faidhlichean fuaime a thoirt air falbh nas fhaide air adhart, cuir dheth an fhuaim, luchdaich a-nuas am pasgan is ion-phortaich e a-rithist, agus an uair sin sguab às na faidhlichean nach eil gan cleachdadh le Tools → Check Media ann an Anki.",
     "audio.play": "Cluich am facal",
