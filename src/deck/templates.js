@@ -46,6 +46,15 @@ const sideOf = (ctx, row) => ctx.meta.fields.fields.find((/** @type {any} */ f) 
 /** What a measure-word row is called: a counter in Japanese, a classifier in Vietnamese. @type {Record<string, string>} */
 const MEASURE_CAPTION = { ja: 'section.counter', vi: 'section.classifier' };
 
+/** Join template blocks on separate lines, skipping sections that are switched off. @param {...string} parts */
+const lines = (...parts) => parts.filter(Boolean).join('\n');
+
+/** Indent HTML and Anki conditional sections for the card template editor. @param {string} open @param {string} body @param {string} close */
+const wrap = (open, body, close) => `${open}\n${body.split('\n').map((line) => `  ${line}`).join('\n')}\n${close}`;
+
+/** @param {string} field @param {string} body */
+const conditional = (field, body) => wrap(`{{#${field}}}`, body, `{{/${field}}}`);
+
 /**
  * A conditional section, shown only when the field is not empty.
  * @param {DeckContext} ctx @param {string} row @param {string} field @param {string} cls @param {string | null} captionKey
@@ -54,20 +63,20 @@ function section(ctx, row, field, cls, captionKey) {
   const key = (row === 'measureWord' && MEASURE_CAPTION[ctx.learn.code]) || captionKey;
   const caption = key ? `<div class="cap"${ctx.bidi ? ctx.know.attrs : ''}>${escapeHtml(ctx.label(key) ?? '')}</div>` : '';
   const lang = sideOf(ctx, row) === 'learning' ? ctx.learn.attrs : ctx.know.attrs;
-  return `{{#${field}}}<div class="sec ${cls}">${caption}<div class="val"${lang} data-field="${field}">{{${field}}}</div></div>{{/${field}}}`;
+  return conditional(field, wrap(`<div class="sec ${cls}">`, lines(caption, `<div class="val"${lang} data-field="${field}">{{${field}}}</div>`), '</div>'));
 }
 
 /** @param {DeckContext} ctx @param {(row: string, placement: string) => boolean} pick */
 function sections(ctx, pick) {
-  return ROWS.filter(([row]) => pick(row, ctx.place(row))).map(([row, field, cls, cap]) => section(ctx, row, field, cls, cap)).join('');
+  return ROWS.filter(([row]) => pick(row, ctx.place(row))).map(([row, field, cls, cap]) => section(ctx, row, field, cls, cap)).join('\n');
 }
 
 /** @param {DeckContext} ctx @param {boolean} ruby */
 function word(ctx, ruby) {
   const field = ruby ? 'WordRuby' : 'Word';
-  return (
-    `<div class="word"${ctx.learn.attrs} data-field="${field}">{{${field}}}</div>` +
-    `{{#Disambig}}<div class="disambig"${ctx.know.attrs} data-field="Disambig">{{Disambig}}</div>{{/Disambig}}`
+  return lines(
+    `<div class="word"${ctx.learn.attrs} data-field="${field}">{{${field}}}</div>`,
+    conditional('Disambig', `<div class="disambig"${ctx.know.attrs} data-field="Disambig">{{Disambig}}</div>`),
   );
 }
 
@@ -79,13 +88,16 @@ function translation(ctx, cls) {
     const tag = langTag(reg, code, ctx.config.srScript);
     const dir = reg?.dir === 'rtl' ? 'rtl' : 'ltr';
     // Native details/summary works in Anki's webviews and the sandboxed preview, without scripts.
-    return `{{#${field}}}<details class="fallback"><summary lang="${tag}" dir="${dir}">${escapeHtml(reg?.native ?? code)}</summary><div class="translation" lang="${tag}" dir="${dir}" data-field="${field}">{{${field}}}</div></details>{{/${field}}}`;
-  }).join('');
-  return `<div class="${cls}"${ctx.know.attrs} data-field="Translation">{{Translation}}</div>` + fallbacks;
+    return conditional(field, wrap('<details class="fallback">', lines(
+      `<summary lang="${tag}" dir="${dir}">${escapeHtml(reg?.native ?? code)}</summary>`,
+      `<div class="translation" lang="${tag}" dir="${dir}" data-field="${field}">{{${field}}}</div>`,
+    ), '</details>'));
+  }).join('\n');
+  return lines(`<div class="${cls}"${ctx.know.attrs} data-field="Translation">{{Translation}}</div>`, fallbacks);
 }
 
 /** @param {string} dir @param {string} side @param {string} body */
-const card = (dir, side, body) => `<div class="ag ag-${dir}" data-dir="${dir}" data-side="${side}">${body}</div>`;
+const card = (dir, side, body) => wrap(`<div class="ag ag-${dir}" data-dir="${dir}" data-side="${side}">`, body, '</div>');
 
 /**
  * @param {DeckContext} ctx
@@ -98,34 +110,31 @@ export function noteType(ctx, css) {
   const isEmoji = (/** @type {string} */ row) => row === 'emoji';
   const learningRow = (/** @type {string} */ row) => sideOf(ctx, row) === 'learning';
 
-  const audio = ctx.audio ? '{{#Audio}}<div class="audio" data-field="Audio">{{Audio}}</div>{{/Audio}}' : '';
+  const audio = ctx.audio ? conditional('Audio', '<div class="audio" data-field="Audio">{{Audio}}</div>') : '';
 
   // Forward: emoji (if on the front) above the word, other Front rows below it.
   const fwdQuestion = (/** @type {boolean} */ ruby, sound = '') =>
-    sections(ctx, (row, p) => isEmoji(row) && p === 'front') + word(ctx, ruby) + sound + sections(ctx, (row, p) => !isEmoji(row) && p === 'front');
+    lines(sections(ctx, (row, p) => isEmoji(row) && p === 'front'), word(ctx, ruby), sound, sections(ctx, (row, p) => !isEmoji(row) && p === 'front'));
   const forwardFront = card('forward', 'front', fwdQuestion(reading === 'front', audio));
   const forwardBack = card(
     'forward',
     'back',
-    fwdQuestion(reading !== 'off', audio) + '<hr id=answer>' + translation(ctx, 'translation') + sections(ctx, (_, p) => p === 'back'),
+    lines(fwdQuestion(reading !== 'off', audio), '<hr id=answer>', translation(ctx, 'translation'), sections(ctx, (_, p) => p === 'back')),
   );
 
   // Reverse: only the translation and concept rows placed on Front ask the question.
-  const revQuestion =
-    sections(ctx, (row, p) => isEmoji(row) && p === 'front') +
-    translation(ctx, 'translation prompt') +
-    sections(ctx, (row, p) => !isEmoji(row) && !learningRow(row) && p === 'front');
+  const revQuestion = lines(
+    sections(ctx, (row, p) => isEmoji(row) && p === 'front'),
+    translation(ctx, 'translation prompt'),
+    sections(ctx, (row, p) => !isEmoji(row) && !learningRow(row) && p === 'front'),
+  );
   const typeBox = type ? `<div class="typeans"${ctx.bidi ? ctx.learn.attrs : ''}>{{type:TypeTarget}}</div>` : '';
-  const reverseFront = `{{#Reverse}}${card('reverse', 'front', revQuestion + typeBox)}{{/Reverse}}`;
+  const reverseFront = conditional('Reverse', card('reverse', 'front', lines(revQuestion, typeBox)));
   const reverseBack = card(
     'reverse',
     'back',
-    revQuestion +
-      '<hr id=answer>' +
-      typeBox +
-      word(ctx, reading !== 'off') +
-      audio +
-      sections(ctx, (row, p) => (learningRow(row) ? p !== 'off' : p === 'back')),
+    lines(revQuestion, '<hr id=answer>', typeBox, word(ctx, reading !== 'off'), audio,
+      sections(ctx, (row, p) => (learningRow(row) ? p !== 'off' : p === 'back'))),
   );
 
   return {

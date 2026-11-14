@@ -83,7 +83,7 @@ test('cards render like Anki: no reverse card without the Reverse field, type bo
   assert.ok(fwd);
   assert.match(fwd.front, /<span class="art">das<\/span> Wasser/);
   assert.doesNotMatch(fwd.front, /water/);
-  assert.match(fwd.back, /<hr id=answer><div class="translation" lang="en-US" data-field="Translation">water<\/div>/);
+  assert.match(fwd.back, /<hr id=answer>\s*<div class="translation" lang="en-US" data-field="Translation">water<\/div>/);
 
   const typed = await fixtureDeck({ learn: 'de', know: 'en', reverse: true, type: true });
   const rev = renderCard(typed.noteType, typed.notes[0].fields, 1);

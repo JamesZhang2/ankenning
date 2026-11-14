@@ -101,7 +101,7 @@ test('Italian: the elided article joins its word', () => {
 test('Vietnamese: classifiers under their own caption; search finds đ typed as d', () => {
   const d = deck({ learn: 'vi', know: 'en' });
   assert.equal(fieldsOf(d, 'word-hand').MeasureWord, 'bàn');
-  assert.match(d.noteType.templates[0].afmt, /<div class="cap">Classifier<\/div><div class="val" lang="vi-VN" data-field="MeasureWord">/);
+  assert.match(d.noteType.templates[0].afmt, /<div class="cap">Classifier<\/div>\s*<div class="val" lang="vi-VN" data-field="MeasureWord">/);
   const search = createSearch(d.notes, deckContext(d));
   for (const query of ['do uong', 'đồ uống', 'Do']) assert.ok(search.filter(query).some((n) => n.conceptIds.includes('word-drink')), query);
 });

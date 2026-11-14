@@ -51,7 +51,7 @@ test('fallbacks start collapsed wherever the primary translation appears; no ans
   assert.ok(forward && reverse);
   assert.doesNotMatch(forward.front, /water|Translation_en|<details/);
   for (const face of [forward.back, reverse.front, reverse.back]) {
-    assert.match(face, /<details class="fallback"><summary lang="en-US" dir="ltr">English<\/summary><div class="translation" lang="en-US" dir="ltr" data-field="Translation_en">water<\/div><\/details>/);
+    assert.match(face, /<details class="fallback">\s*<summary lang="en-US" dir="ltr">English<\/summary>\s*<div class="translation" lang="en-US" dir="ltr" data-field="Translation_en">water<\/div>\s*<\/details>/);
     assert.doesNotMatch(face, /<details[^>]*\bopen\b/);
   }
   const ordinary = await fixtureDeck({ learn: 'ja', know: 'de' });
@@ -106,6 +106,6 @@ test('real French deck uses Spanish primarily and English as a hidden fallback',
   const front = renderCard(deck.noteType, water.fields, 0)?.front ?? '';
   const back = renderCard(deck.noteType, water.fields, 0)?.back ?? '';
   assert.doesNotMatch(front, /agua|water/);
-  assert.match(back, /data-field="Translation">agua<\/div><details/);
+  assert.match(back, /data-field="Translation">agua<\/div>\s*<details/);
   assert.match(back, /data-field="Translation_en">water/);
 });
